@@ -1,0 +1,26 @@
+micronaut:
+  application:
+    name: curiousbear
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/curiousbear
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: postgres
+jpa:
+  default:
+    packages-to-scan:
+      - 'com.kodebjorn'
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: none
+        show_sql: true
+flyway:
+  datasources:
+    default:
+      enabled: true
+netty:
+  default:
+    allocator:
+      max-order: 3
