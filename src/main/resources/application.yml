@@ -1,6 +1,12 @@
 micronaut:
-  application:
-    name: curiousbear
+  security:
+    authentication: bearer
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:MammaLikerKaffe378lkdlk=90234?}"'
 datasources:
   default:
     url: jdbc:postgresql://localhost:5432/curiousbear
@@ -14,12 +20,12 @@ jpa:
     properties:
       hibernate:
         hbm2ddl:
-          auto: none
+          auto: update
         show_sql: true
 flyway:
   datasources:
     default:
-      enabled: true
+      enabled: false
 netty:
   default:
     allocator:

@@ -12,25 +12,41 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    main {
+        java { srcDirs = [] }    // no source dirs for the java compiler
+        groovy { srcDirs = ["src/main/java", "src/main/groovy"] }  // compile   everything in src/ with groovy
+    }
+}
+
 dependencies {
-    // https://mvnrepository.com/artifact/org.projectlombok/lombok
-    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor('io.micronaut.security:micronaut-security-annotations:3.5.0')
     annotationProcessor("io.micronaut.data:micronaut-data-processor:3.3.0")
-    annotationProcessor('io.micronaut:micronaut-http-validation:3.4.0')
-    implementation('io.micronaut:micronaut-http-client:3.4.0')
+    annotationProcessor('io.micronaut:micronaut-http-validation:3.4.1')
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.10'
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    implementation('io.micronaut:micronaut-http-client:3.4.1')
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto
+    implementation 'org.springframework.security:spring-security-crypto:5.6.2'
+    // https://mvnrepository.com/artifact/commons-logging/commons-logging
+    implementation 'commons-logging:commons-logging:1.2'
     implementation 'io.micronaut.data:micronaut-data-model:3.3.0'
-    implementation('io.micronaut:micronaut-jackson-databind:3.4.0')
-    implementation('io.micronaut:micronaut-runtime:3.4.0')
+    implementation('io.micronaut:micronaut-jackson-databind:3.4.1')
+    implementation('io.micronaut:micronaut-runtime:3.4.1')
     implementation('io.micronaut.flyway:micronaut-flyway:5.2.0')
     implementation('io.micronaut.sql:micronaut-jdbc-hikari:4.2.2')
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa:3.3.0")
     implementation('jakarta.annotation:jakarta.annotation-api:2.0.0')
+    implementation('io.micronaut.security:micronaut-security-jwt:3.5.0')
+    implementation('io.micronaut.reactor:micronaut-reactor:2.2.2')
+    implementation('io.micronaut.reactor:micronaut-reactor-http-client:2.2.2')
     runtimeOnly('ch.qos.logback:logback-classic:1.2.11')
     runtimeOnly('org.postgresql:postgresql:42.3.3')
     testImplementation('org.testcontainers:postgresql:1.16.3')
     testImplementation('org.testcontainers:spock:1.16.3')
     testImplementation('org.testcontainers:testcontainers:1.16.3')
-    implementation('io.micronaut:micronaut-validation:3.4.0')
+    implementation('io.micronaut:micronaut-validation:3.4.1')
 
 }
 

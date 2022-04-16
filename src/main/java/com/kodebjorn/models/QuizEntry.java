@@ -1,36 +1,45 @@
 package com.kodebjorn.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kodebjorn.models.utils.SuperEntity;
 import io.micronaut.core.annotation.Introspected;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 
-@Table(name = "quiz_entries")
 @Entity
 @Introspected
-public class QuizEntry {
+public class QuizEntry implements SuperEntity<Integer> {
   @Id
   @GeneratedValue
   @Column(name = "id", nullable = false)
   private Integer id;
 
-  @ManyToOne(fetch = FetchType.EAGER, optional = false)
-  @JoinColumn(name = "quiz_id", nullable = false)
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JsonIgnore
   private Quiz quiz;
 
-  @Column(name = "name")
-  private String name;
-
+  @NotNull
   @Column(name = "quiz_entry_type", nullable = false)
   private String quizEntryType;
 
+  @NotNull
   @Lob
-  @Column(name = "question", nullable = false)
+  @Column(name = "question", nullable = false, length = 300)
   private String question;
 
+  @NotNull
   @Column(name = "options", nullable = false)
   private String[] options;
 
+  @NotNull
   @Column(name = "answer", nullable = false)
   private String answer;
 
@@ -66,14 +75,6 @@ public class QuizEntry {
     this.quizEntryType = quizEntryType;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public Quiz getQuiz() {
     return quiz;
   }
@@ -88,5 +89,17 @@ public class QuizEntry {
 
   public void setId(Integer id) {
     this.id = id;
+  }
+
+  @Override
+  public String toString() {
+    return "QuizEntry{" +
+        "id=" + id +
+        ", quiz=" + quiz +
+        ", quizEntryType='" + quizEntryType + '\'' +
+        ", question='" + question + '\'' +
+        ", options=" + Arrays.toString(options) +
+        ", answer='" + answer + '\'' +
+        '}';
   }
 }

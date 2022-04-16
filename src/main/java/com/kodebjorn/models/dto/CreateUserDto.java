@@ -1,27 +1,31 @@
 package com.kodebjorn.models.dto;
 
-import com.kodebjorn.models.User;
 import com.kodebjorn.models.UserCredential;
+import io.micronaut.core.annotation.Introspected;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Introspected
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class CreateUserDto {
 
-  private String username;
-  private String password;
-  private String email;
+  public String username;
+  public String password;
+  public String email;
 
 
   public UserCredential getUserCredential() {
-    return UserCredential.builder()
-        .email(email)
-        .username(username)
-        .password(password)
-        .build();
+    return new UserCredential(username, password, email);
   }
 
-  public User getUser() {
-    return User.builder()
-        .userCredential(getUserCredential())
-        .build();
+  @Override
+  public String toString() {
+    return "CreateUserDto{" +
+        "username='" + username + '\'' +
+        ", email='" + email + '\'' +
+        '}';
   }
-
 }
