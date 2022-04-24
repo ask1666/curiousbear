@@ -39,7 +39,7 @@ public class QuizController {
     }
 
     @Get
-    public HttpResponse<?> getAll() {
+    public HttpResponse<?> getAllQuiz() {
         List<QuizAntity> quizAntities = quizService.getAll()
             .stream()
             .map(QuizMapper::mapToApi)
@@ -49,12 +49,12 @@ public class QuizController {
     }
 
     @Get("/{title}")
-    public HttpResponse<?> getByTitle(@PathVariable String title) {
+    public HttpResponse<?> getQuizByTitle(@PathVariable String title) {
         return HttpResponse.ok(mapToApi(quizService.findByTitle(title)));
     }
 
     @Post
-    public HttpResponse<?> create(@Valid @Body CreateQuizDto quizDto) {
+    public HttpResponse<?> createQuiz(@Valid @Body CreateQuizDto quizDto) {
         var user = userService.findByUsername(quizDto.getUsername());
         var quiz = quizDto.getQuiz();
         quiz.setUser(user);
@@ -62,14 +62,14 @@ public class QuizController {
     }
 
     @Put("/{id}")
-    public HttpResponse<?> update(@PathVariable Integer id, @Body CreateQuizDto quizDto) {
+    public HttpResponse<?> updateQuiz(@PathVariable Integer id, @Body CreateQuizDto quizDto) {
         var quiz = quizService.findById(id);
         var mappedQuiz = mapUpdatedFields(quiz, quizDto.getQuiz());
         return HttpResponse.ok(quizService.save(mappedQuiz));
     }
 
     @Delete("/{title}")
-    public HttpResponse<?> deleteByTitle(@PathVariable String title) {
+    public HttpResponse<?> deleteQuizByTitle(@PathVariable String title) {
         quizService.deleteByTitle(title);
         return HttpResponse.ok("ok");
     }

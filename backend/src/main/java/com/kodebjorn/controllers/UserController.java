@@ -43,7 +43,7 @@ public class UserController {
 
   @Secured(SecurityRule.IS_AUTHENTICATED)
   @Get
-  public HttpResponse<?> getAll() {
+  public HttpResponse<?> getAllUsers() {
     Iterable<UserCredential> userIterable = userCredentialRepository.findAll();
     ArrayList<UserCredential> userList = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class UserController {
 
   @Secured(SecurityRule.IS_ANONYMOUS)
   @Post(consumes = MediaType.APPLICATION_JSON)
-  public HttpResponse<?> create(@Valid @Body CreateUserDto createUserDto) {
+  public HttpResponse<?> createUser(@Valid @Body CreateUserDto createUserDto) {
     createUserDto.password = encoder.encode(createUserDto.password);
     return HttpResponse.ok(
         mapToApi(userService.createUser(createUserDto))
@@ -62,13 +62,13 @@ public class UserController {
   }
 
   @Delete("/deleteByUsername/{username}")
-  public HttpResponse<?> deleteAll(@PathVariable String username) {
+  public HttpResponse<?> deletebyUsername(@PathVariable String username) {
     userService.deleteByUsername(username);
     return HttpResponse.ok("its ok");
   }
 
   @Delete("/delete/{userId}")
-  public HttpResponse<?> deleteById(@PathVariable Integer userId) {
+  public HttpResponse<?> deleteUserById(@PathVariable Integer userId) {
     userService.delete(userId);
     return HttpResponse.ok("its ok");
   }
