@@ -2,7 +2,7 @@ package com.kodebjorn.models;
 
 
 import com.kodebjorn.models.utils.Fetcher;
-import com.kodebjorn.models.utils.StateContainerEntity;
+import com.kodebjorn.models.utils.WithChildrenEntity;
 import io.micronaut.core.annotation.Introspected;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 @Table(name = "users")
 @Entity
 @Introspected
-public class User extends StateContainerEntity<Integer> {
+public class User extends WithChildrenEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

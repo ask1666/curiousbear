@@ -14,7 +14,7 @@ import java.util.Set;
  * to be able to keep track of children, when deleting or persisting.
  */
 @Introspected
-public abstract class StateContainerEntity<ID> implements SuperEntity<ID> {
+public abstract class WithChildrenEntity<ID> implements SuperEntity<ID> {
 
     @Transient
     private final Set<SuperEntity<?>> children = new LinkedHashSet<>();

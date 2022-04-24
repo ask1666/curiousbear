@@ -1,7 +1,7 @@
 package com.kodebjorn.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kodebjorn.models.utils.StateContainerEntity;
+import com.kodebjorn.models.utils.WithChildrenEntity;
 import com.kodebjorn.models.utils.Fetcher;
 import io.micronaut.core.annotation.Introspected;
 
@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 @Table(name = "quiz")
 @Entity
 @Introspected
-public class Quiz extends StateContainerEntity<Integer> {
+public class Quiz extends WithChildrenEntity<Integer> {
 
   @Id
   @GeneratedValue
