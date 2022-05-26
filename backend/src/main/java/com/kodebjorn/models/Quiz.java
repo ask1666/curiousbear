@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -36,7 +37,7 @@ public class Quiz extends WithChildrenEntity<Integer> {
   private User user;
 
   @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "quiz")
-  private List<QuizEntry> quizEntries;
+  private List<QuizEntry> quizEntries = new ArrayList<>();
 
   @Size(min = 3, max = 50, message
       = "About Me must be between 3 and 50 characters")

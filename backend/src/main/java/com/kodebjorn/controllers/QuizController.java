@@ -17,6 +17,7 @@ import io.micronaut.http.annotation.Put;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,6 +62,7 @@ public class QuizController {
         return HttpResponse.ok(mapToApi(quizService.save(quiz)));
     }
 
+    @Transactional
     @Put("/{id}")
     public HttpResponse<?> updateQuiz(@PathVariable Integer id, @Body CreateQuizDto quizDto) {
         var quiz = quizService.findById(id);
