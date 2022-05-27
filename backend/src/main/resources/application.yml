@@ -1,4 +1,11 @@
 micronaut:
+  server:
+    cors:
+      enabled: true
+#      configurations:
+#        web:
+#          allowedOrigins:
+#          - http://localhost:8080
   security:
     authentication: bearer
     token:
@@ -7,6 +14,7 @@ micronaut:
           secret:
             generator:
               secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:MammaLikerKaffe378lkdlk=90234?}"'
+
 datasources:
   default:
     url: jdbc:postgresql://localhost:5432/curiousbear

@@ -73,10 +73,11 @@ micronaut {
 }
 
 openApiGenerate {
-    generatorName = "typescript-fetch"
+    generatorName = "typescript-axios"
     inputSpec = "$buildDir/classes/groovy/main/META-INF/swagger/curiousbear-0.1.yml".toString()
     outputDir = "${projectDir}/../curiousbear-frontend/generated".toString()
     apiPackage = "com.kodebjorn"
     modelPackage = "com.kodebjorn.models"
+
 }
 build.finalizedBy('openApiGenerate')

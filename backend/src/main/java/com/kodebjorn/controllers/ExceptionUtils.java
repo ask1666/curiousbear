@@ -10,6 +10,9 @@ public class ExceptionUtils {
     public static Supplier<HttpStatusException> getUserNotFoundException() {
         return () -> new HttpStatusException(HttpStatus.NOT_FOUND, "Could not find user.");
     }
+    public static Supplier<HttpStatusException> getUserDuplicateException() {
+        return () -> new HttpStatusException(HttpStatus.CONFLICT, "User already exists.");
+    }
 
     public static Supplier<HttpStatusException> getQuizNotFoundException() {
         return () -> new HttpStatusException(HttpStatus.NOT_FOUND, "Could not find quiz.");

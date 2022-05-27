@@ -50,7 +50,7 @@
 					<div class="hidden sm:block sm:ml-6">
 						<div class="flex space-x-4">
 							<router-link
-								v-for="item in navigations"
+								v-for="item in topNavigations"
 								:key="item.name"
 								:to="item.href"
 								:class="[
@@ -116,11 +116,6 @@
 									class="h-6 w-6 text-white rounded-full"
 									icon="user"
 								/>
-								<!-- <img
-                  class="h-8 w-8 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                /> -->
 							</button>
 						</div>
 						<div
@@ -140,9 +135,10 @@
 								focus:outline-none
 							"
 						>
-							<div>
+							<div v-for="nav in profileNavigations" :key="nav.name">
 								<router-link
-									to="#"
+									:to="nav.href"
+									@click="() => (profileMenuToggled = false)"
 									class="
 										block
 										px-4
@@ -150,33 +146,7 @@
 										text-sm text-gray-700
 										hover:bg-gray-200
 									"
-									>Your Profile
-								</router-link>
-							</div>
-							<div>
-								<router-link
-									to="#"
-									class="
-										block
-										px-4
-										py-2
-										text-sm text-gray-700
-										hover:bg-gray-200
-									"
-									>Settings
-								</router-link>
-							</div>
-							<div>
-								<router-link
-									to="#"
-									class="
-										block
-										px-4
-										py-2
-										text-sm text-gray-700
-										hover:bg-gray-200
-									"
-									>Sign out
+									>{{ nav.name }}
 								</router-link>
 							</div>
 						</div>
@@ -192,7 +162,7 @@
 				class="px-2 pt-2 pb-3 space-y-1"
 			>
 				<router-link
-					v-for="item in navigations"
+					v-for="item in topNavigations"
 					:key="item.name"
 					:to="item.href"
 					:class="[
@@ -209,11 +179,11 @@
 </template>
 
 <script lang="ts">
-import { computed, watch, ComputedRef, reactive, toRefs } from 'vue'
+import { computed, watch, reactive, toRefs } from 'vue'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { useStore } from 'vuex'
-import { routes, protectedRoutes } from '../routes'
+import { routes, protectedRoutes, topBarRoutes, profileRoutes } from '../routes'
 // @ts-ignore
 import vClickOutside from 'click-outside-vue3'
 
@@ -254,16 +224,9 @@ export default {
 			return state.currentRouteName === routeName
 		}
 
-		watch(route, () => {
-			state.currentRouteName = route.name?.toString() ?? ''
-		})
-
 		const isLoggedIn = computed(() => {
 			const user = store.getters.getUser
 			const currentRoute = router.currentRoute.value
-			console.log(user), console.log(protectedRoutes)
-			console.log(currentRoute)
-			console.log(protectedRoutes.find((e) => e.path == currentRoute.path))
 			if (
 				user !== undefined ||
 				protectedRoutes.find((e) => e.path == currentRoute.path) === undefined
@@ -275,26 +238,43 @@ export default {
 			}
 		})
 
-		// TODO - set up more route categories in routes.ts for display in main links, under profileDropDown etc..
-		const navigations: ComputedRef<Navigation[]> = computed(() => {
-			const things: Navigation[] = []
-
-			routes.forEach((e) => {
-				things.push({
-					name: e.name,
-					href: e.path,
-					current: isCurrent(e.name),
-				} as Navigation)
-			})
-
-			return things
+		watch(route, () => {
+			state.currentRouteName = route.name?.toString() ?? ''
 		})
 
 		return {
 			...toRefs(state),
-			isLoggedIn,
-			navigations,
+
 			routes,
+			isLoggedIn,
+
+			topNavigations: computed(() => {
+				const navs: Navigation[] = []
+
+				topBarRoutes.forEach((e) => {
+					navs.push({
+						name: e.name,
+						href: e.path,
+						current: isCurrent(e.name),
+					} as Navigation)
+				})
+
+				return navs
+			}),
+
+			profileNavigations: computed(() => {
+				const navs: Navigation[] = []
+
+				profileRoutes.forEach((e) => {
+					navs.push({
+						name: e.name,
+						href: e.path,
+						current: isCurrent(e.name),
+					} as Navigation)
+				})
+
+				return navs
+			}),
 		}
 	},
 }

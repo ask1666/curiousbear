@@ -2,8 +2,19 @@ import Home from './views/Home.vue'
 import About from './views/About.vue'
 import CreateUser from './views/CreateUser.vue'
 import Login from './views/Login.vue'
+import { Component } from 'vue'
 
-export const protectedRoutes = [
+type CustomRoute = {
+	path: string,
+		name: string,
+		component: Component,
+}
+
+export const protectedRoutes: CustomRoute[] = [
+
+]
+
+export const topBarRoutes: CustomRoute[] = [
   {
 		path: '/',
 		name: 'Home',
@@ -16,9 +27,8 @@ export const protectedRoutes = [
 	},
 ]
 
-export const routes = [
-	...protectedRoutes,
-	{
+export const profileRoutes: CustomRoute[] = [
+  {
 		path: '/createUser',
 		name: 'Create User',
 		component: CreateUser,
@@ -28,6 +38,12 @@ export const routes = [
 		name: 'Login',
 		component: Login,
 	},
+]
+
+export const routes: CustomRoute[] = [
+	...protectedRoutes,
+	...profileRoutes,
+	...topBarRoutes
 ]
 
 export default routes

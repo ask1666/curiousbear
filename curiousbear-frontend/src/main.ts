@@ -9,7 +9,12 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import vClickOutside from 'click-outside-vue3'
 // @ts-ignore
 import { store } from './Store'
+import axios from 'axios'
 library.add(...[faBars, faUser])
+
+axios.defaults.headers.common = {
+  "Access-Control-Allow-Origin": "*"
+};
 
 createApp(App)
 	.component('font-awesome-icon', FontAwesomeIcon)

@@ -10,8 +10,11 @@ import io.micronaut.core.annotation.Introspected;
 
 import jakarta.inject.Singleton;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
 import java.util.List;
 
+import static com.kodebjorn.controllers.ExceptionUtils.getUserDuplicateException;
 import static com.kodebjorn.controllers.ExceptionUtils.getUserNotFoundException;
 
 
@@ -46,9 +49,14 @@ public class UserService {
         return userRepository.findById(userId).orElseThrow(getUserNotFoundException());
     }
 
-    public User createUser(CreateUserDto userDto) {
+    public User createUser(@Valid CreateUserDto userDto) {
         var user = new User(userDto.getUserCredential());
-        return superRepository.save(user);
+        try {
+            return superRepository.save(user);
+        } catch (ConstraintViolationException ex) {
+            System.out.println(ex.getConstraintViolations());
+            throw getUserDuplicateException().get();
+        }
     }
 
     @Transactional
