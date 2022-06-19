@@ -38,6 +38,10 @@ public class AuthenticationProviderUserPassword implements AuthenticationProvide
             } catch (HttpStatusException ex) {
                 throw ExceptionUtils.notAuthenticatedException();
             }
+            System.out.println(passwordEncoder.matches(authenticationRequest.getSecret().toString(), user.getUserCredential().getPassword()));
+            System.out.println(passwordEncoder.encode(authenticationRequest.getSecret().toString()));
+            System.out.println(user.getUserCredential().getPassword());
+            System.out.println(authenticationRequest.getIdentity().toString());
         if (passwordEncoder.matches(authenticationRequest.getSecret().toString(), user.getUserCredential().getPassword())) {
             AuthenticationResponse success = AuthenticationResponse.success((String) authenticationRequest.getIdentity());
             emitter.next(success);

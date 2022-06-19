@@ -4,10 +4,10 @@ import CreateUser from './views/CreateUser.vue'
 import Login from './views/Login.vue'
 import { Component } from 'vue'
 
-type CustomRoute = {
+export type CustomRoute = {
 	path: string,
-		name: string,
-		component: Component,
+	name: string,
+	component: Component,
 }
 
 export const protectedRoutes: CustomRoute[] = [

@@ -1,5 +1,6 @@
 package com.kodebjorn.services;
 
+import com.kodebjorn.models.Quiz;
 import com.kodebjorn.models.User;
 import com.kodebjorn.models.User.UserFetcher;
 import com.kodebjorn.models.dto.CreateUserDto;
@@ -16,6 +17,8 @@ import java.util.List;
 
 import static com.kodebjorn.controllers.ExceptionUtils.getUserDuplicateException;
 import static com.kodebjorn.controllers.ExceptionUtils.getUserNotFoundException;
+import static com.kodebjorn.models.Quiz.QuizFetcher.FetchQuizEntries;
+import static com.kodebjorn.models.User.UserFetcher.FetchQuiz;
 
 
 @Singleton
@@ -43,6 +46,15 @@ public class UserService {
     public User findByUsername(String username) {
         var userCredential = userCredentialRepository.findByUsername(username).orElseThrow(getUserNotFoundException());
         return userCredential.getUser();
+    }
+
+    @Transactional
+    public List<Quiz> getMyQuiz(String username) {
+        return FetchQuiz.fetch(findByUsername(username))
+            .getQuiz()
+            .stream()
+            .map(FetchQuizEntries::fetch)
+            .toList();
     }
 
     public User findById(Integer userId) {

@@ -2,6 +2,7 @@ package com.kodebjorn.controllers;
 
 import com.kodebjorn.models.dto.CreateQuizDto;
 import com.kodebjorn.models.dto.QuizAntity;
+import com.kodebjorn.models.dto.UpdateQuizDto;
 import com.kodebjorn.models.mappers.QuizMapper;
 import com.kodebjorn.services.QuizService;
 import com.kodebjorn.services.UserService;
@@ -64,10 +65,10 @@ public class QuizController {
 
     @Transactional
     @Put("/{id}")
-    public HttpResponse<?> updateQuiz(@PathVariable Integer id, @Body CreateQuizDto quizDto) {
+    public HttpResponse<?> updateQuiz(@PathVariable Integer id, @Body UpdateQuizDto quizDto) {
         var quiz = quizService.findById(id);
         var mappedQuiz = mapUpdatedFields(quiz, quizDto.getQuiz());
-        return HttpResponse.ok(quizService.save(mappedQuiz));
+        return HttpResponse.ok(mapToApi(quizService.save(mappedQuiz)));
     }
 
     @Delete("/{title}")

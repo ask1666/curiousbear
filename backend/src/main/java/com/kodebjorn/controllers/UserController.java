@@ -1,6 +1,9 @@
 package com.kodebjorn.controllers;
 
 import com.kodebjorn.models.dto.CreateUserDto;
+import com.kodebjorn.models.dto.QuizAntity;
+import com.kodebjorn.models.dto.UserAntity;
+import com.kodebjorn.models.mappers.QuizMapper;
 import com.kodebjorn.models.mappers.UserMapper;
 import com.kodebjorn.services.UserService;
 import io.micronaut.core.annotation.Introspected;
@@ -47,9 +50,18 @@ public class UserController {
         );
     }
 
+    @Secured(SecurityRule.IS_AUTHENTICATED)
+    @Get("/{username}")
+    public HttpResponse<List<QuizAntity>> getMyQuiz(@PathVariable String username) {
+        return HttpResponse.ok(userService.getMyQuiz(username)
+            .stream()
+            .map(QuizMapper::mapToApi)
+            .toList());
+    }
+
     @Secured(SecurityRule.IS_ANONYMOUS)
     @Post(consumes = MediaType.APPLICATION_JSON)
-    public HttpResponse<?> createUser(@Valid @Body CreateUserDto createUserDto) {
+    public HttpResponse<UserAntity> createUser(@Valid @Body CreateUserDto createUserDto) {
         createUserDto.password = encoder.encode(createUserDto.password);
         return HttpResponse.ok(
             mapToApi(userService.createUser(createUserDto))
