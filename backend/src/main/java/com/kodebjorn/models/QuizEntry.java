@@ -2,18 +2,21 @@ package com.kodebjorn.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kodebjorn.models.utils.SuperEntity;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import io.micronaut.core.annotation.Introspected;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 @Entity
 @Introspected
 public class QuizEntry implements SuperEntity<Integer> {
@@ -26,20 +29,20 @@ public class QuizEntry implements SuperEntity<Integer> {
   @JsonIgnore
   private Quiz quiz;
 
-  @NotNull
+  
   @Column(name = "quiz_entry_type", nullable = false)
   private String quizEntryType;
 
-  @NotNull
-  @Lob
+  
+  @Type(type = "jsonb")
   @Column(name = "question", nullable = false, length = 300)
   private String question;
 
-  @NotNull
+  
   @Column(name = "options", nullable = false)
   private String[] options;
 
-  @NotNull
+  
   @Column(name = "answer", nullable = false)
   private String answer;
 

@@ -1,4 +1,5 @@
 plugins {
+    id 'java'
     id("org.openapi.generator") version "5.4.0"
     id("groovy")
     id("com.github.johnrengelman.shadow") version "7.1.2"
@@ -16,40 +17,43 @@ repositories {
 sourceSets {
     main {
         java { srcDirs = [] }    // no source dirs for the java compiler
-        groovy { srcDirs = ["src/main/java", "src/main/groovy"] }  // compile   everything in src/ with groovy
+        groovy { srcDirs = ['src/main/java', 'src/main/groovy'] as SourceSet }  // compile   everything in src/ with groovy
     }
 }
 
 dependencies {
-    annotationProcessor('io.micronaut.security:micronaut-security-annotations:3.5.0')
-    annotationProcessor("io.micronaut.data:micronaut-data-processor:3.3.0")
-    annotationProcessor('io.micronaut:micronaut-http-validation:3.4.1')
-    annotationProcessor("io.micronaut.openapi:micronaut-openapi:4.0.1")
-    compileOnly 'org.projectlombok:lombok:1.18.22'
-    implementation 'org.codehaus.groovy:groovy-all:3.0.10'
-    // https://mvnrepository.com/artifact/org.projectlombok/lombok
-    implementation('io.micronaut:micronaut-http-client:3.4.1')
-    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto
-    implementation 'org.springframework.security:spring-security-crypto:5.6.2'
-    // https://mvnrepository.com/artifact/commons-logging/commons-logging
+    annotationProcessor 'io.micronaut.security:micronaut-security-annotations:3.8.0'
+    annotationProcessor 'io.micronaut.data:micronaut-data-processor:3.8.0'
+    annotationProcessor 'io.micronaut:micronaut-http-validation:3.6.3'
+    annotationProcessor 'io.micronaut.openapi:micronaut-openapi:4.5.1'
+
+    implementation 'org.codehaus.groovy:groovy-all:3.0.12'
+    implementation 'io.micronaut:micronaut-http-client:3.6.3'
+    implementation 'org.springframework.security:spring-security-crypto:5.7.3'
+    implementation 'com.vladmihalcea:hibernate-types-55:2.19.2'
     implementation 'commons-logging:commons-logging:1.2'
-    implementation("io.swagger.core.v3:swagger-annotations")
-    implementation 'io.micronaut.data:micronaut-data-model:3.3.0'
-    implementation('io.micronaut:micronaut-jackson-databind:3.4.1')
-    implementation('io.micronaut:micronaut-runtime:3.4.1')
-    implementation('io.micronaut.flyway:micronaut-flyway:5.2.0')
-    implementation('io.micronaut.sql:micronaut-jdbc-hikari:4.2.2')
-    implementation("io.micronaut.data:micronaut-data-hibernate-jpa:3.3.0")
-    implementation('jakarta.annotation:jakarta.annotation-api:2.0.0')
-    implementation('io.micronaut.security:micronaut-security-jwt:3.5.0')
-    implementation('io.micronaut.reactor:micronaut-reactor:2.2.2')
-    implementation('io.micronaut.reactor:micronaut-reactor-http-client:2.2.2')
-    runtimeOnly('ch.qos.logback:logback-classic:1.2.11')
-    runtimeOnly('org.postgresql:postgresql:42.3.3')
-    testImplementation('org.testcontainers:postgresql:1.16.3')
-    testImplementation('org.testcontainers:spock:1.16.3')
-    testImplementation('org.testcontainers:testcontainers:1.16.3')
-    implementation('io.micronaut:micronaut-validation:3.4.1')
+    implementation "io.swagger.core.v3:swagger-annotations"
+    implementation 'io.micronaut.data:micronaut-data-model:3.8.0'
+    implementation 'io.micronaut:micronaut-jackson-databind:3.6.3'
+    implementation 'io.micronaut:micronaut-runtime:3.6.3'
+    implementation 'io.micronaut.flyway:micronaut-flyway:5.4.1'
+    implementation 'io.micronaut.sql:micronaut-jdbc-hikari:4.7.0'
+    implementation 'io.micronaut.data:micronaut-data-hibernate-jpa:3.8.0'
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.0'
+    implementation 'io.micronaut.security:micronaut-security-jwt:3.8.0'
+    implementation 'io.micronaut.reactor:micronaut-reactor:2.4.1'
+    implementation 'io.micronaut.reactor:micronaut-reactor-http-client:2.4.1'
+    implementation 'io.micronaut:micronaut-validation:3.6.3'
+
+    testImplementation 'org.testcontainers:postgresql:1.17.3'
+    testImplementation 'org.testcontainers:spock:1.17.3'
+    testImplementation 'org.testcontainers:testcontainers:1.17.3'
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+
+    runtimeOnly 'ch.qos.logback:logback-classic:1.4.1'
+    runtimeOnly 'org.postgresql:postgresql:42.5.0'
+
 
 }
 
@@ -67,17 +71,21 @@ micronaut {
     runtime("netty")
     testRuntime("spock2")
     processing {
-        incremental(true)
-        annotations("com.kodebjorn.*")
+        incremental = true
+        annotations = ["com.kodebjorn.*"]
     }
 }
 
 openApiGenerate {
     generatorName = "typescript-axios"
-    inputSpec = "$buildDir/classes/groovy/main/META-INF/swagger/curiousbear-0.1.yml".toString()
-    outputDir = "${projectDir}/../curiousbear-frontend/generated".toString()
+    inputSpec = "$buildDir/classes/groovy/main/META-INF/swagger/curiousbear-0.1.yml" as String
+    outputDir = "${projectDir}/../curiousbear-frontend/generated" as String
     apiPackage = "com.kodebjorn"
     modelPackage = "com.kodebjorn.models"
 
 }
-build.finalizedBy('openApiGenerate')
+
+build {
+    finalizedBy 'openApiGenerate'
+}
+//build.finalizedBy('openApiGenerate')

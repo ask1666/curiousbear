@@ -31,16 +31,14 @@ public class User extends WithChildrenEntity<Integer> {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @OneToOne(
-        cascade = CascadeType.PERSIST
-    )
+    @OneToOne(cascade = CascadeType.PERSIST)
     private UserCredential userCredential;
 
     @Fetch(FetchMode.SUBSELECT)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Quiz> quiz;
 
-    //TODO: Maybe a Map<Quiz/quiz_id, BigDecimal> to store progress on quizzes.
+    //TODO: Store quiz progress
 
     public List<Quiz> getQuiz() {
         if (quiz == null) {

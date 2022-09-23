@@ -23,9 +23,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.kodebjorn.models.mappers.QuizEntryMapper.mapToApi;
-import static com.kodebjorn.models.mappers.QuizEntryMapper.mapUpdatedFields;
-
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/quizEntry")
 @Introspected
@@ -33,6 +30,8 @@ public class QuizEntryController {
 
     private final QuizService quizService;
     private final QuizEntryService quizEntryService;
+
+    private static final QuizEntryMapper qeMapper = QuizEntryMapper.getInstance();
 
     public QuizEntryController(QuizService service,
                                QuizEntryService entryService) {
@@ -42,7 +41,7 @@ public class QuizEntryController {
 
     @Get("/{id}")
     public HttpResponse<?> getEntryById(@PathVariable Integer id) {
-        return HttpResponse.ok(mapToApi(quizEntryService.getById(id)));
+        return HttpResponse.ok(qeMapper.mapToApi(quizEntryService.getById(id)));
     }
 
     @Transactional
@@ -50,7 +49,7 @@ public class QuizEntryController {
     public HttpResponse<?> getEntriesByQuizTitle(@PathVariable String title) {
         List<QuizEntryAntity> quizAntities = quizEntryService.getByQuizTitle(title)
             .stream()
-            .map(QuizEntryMapper::mapToApi)
+            .map(qeMapper::mapToApi)
             .collect(Collectors.toList());
 
         System.out.println(quizAntities);
@@ -63,15 +62,15 @@ public class QuizEntryController {
         var quizEntry = addQuizEntryDto.getQuizEntry();
         var quiz = quizService.findByTitle(addQuizEntryDto.getQuizTitle());
         quizEntry.setQuiz(quiz);
-        return HttpResponse.ok(mapToApi(quizEntryService.save(quizEntry)));
+        return HttpResponse.ok(qeMapper.mapToApi(quizEntryService.save(quizEntry)));
     }
 
     @Transactional
     @Put("/{id}")
     public HttpResponse<?> updateQuizEntry(@PathVariable Integer id, @Body UpdateQuizEntryDto quizEntryDto) {
         var quizEntry = quizEntryService.getById(id);
-        var mappedQuizEntry = mapUpdatedFields(quizEntry, quizEntryDto.getQuizEntry());
-        return HttpResponse.ok(mapToApi(quizEntryService.save(mappedQuizEntry)));
+        var mappedQuizEntry = qeMapper.mapUpdatedFields(quizEntry, quizEntryDto.getQuizEntry());
+        return HttpResponse.ok(qeMapper.mapToApi(quizEntryService.save(mappedQuizEntry)));
     }
 
     @Delete("/{entryId}")

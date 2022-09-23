@@ -1,9 +1,12 @@
 package com.kodebjorn.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kodebjorn.models.utils.WithChildrenEntity;
 import com.kodebjorn.models.utils.Fetcher;
+import com.kodebjorn.models.utils.WithChildrenEntity;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import io.micronaut.core.annotation.Introspected;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,17 +14,16 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 @Table(name = "quiz")
 @Entity
 @Introspected
@@ -41,16 +43,16 @@ public class Quiz extends WithChildrenEntity<Integer> {
 
   @Size(min = 3, max = 50, message
       = "About Me must be between 3 and 50 characters")
-  @NotNull
+  
   @Column(name = "title", nullable = false, unique = true, length = 50)
   private String title;
 
-  @NotNull
-  @Lob
+  
+  @Type(type = "jsonb")
   @Column(name = "description", nullable = false, length = 300)
   private String description;
 
-  @NotNull
+  
   @Column(name = "is_public", nullable = false)
   private Boolean isPublic = false;
 

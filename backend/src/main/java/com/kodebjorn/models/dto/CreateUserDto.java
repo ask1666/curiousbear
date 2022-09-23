@@ -6,14 +6,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Introspected
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class CreateUserDto {
 
+  @NotNull
   public String username;
+  @NotNull
   public String password;
+  @NotNull
   public String email;
 
 

@@ -3,12 +3,20 @@ package com.kodebjorn.models.mappers
 import com.kodebjorn.models.Quiz
 import com.kodebjorn.models.dto.QuizAntity
 import com.kodebjorn.models.dto.QuizEntryAntity
-import io.micronaut.core.annotation.Introspected
+import groovy.transform.CompileStatic
 
-@Introspected
+@CompileStatic
 class QuizMapper {
 
-    static QuizAntity mapToApi(Quiz quiz) {
+    private static QuizMapper INSTANCE = new QuizMapper()
+
+    static QuizMapper getInstance() {
+        return INSTANCE
+    }
+
+    QuizEntryMapper quizEntryMapper = QuizEntryMapper.instance
+
+    QuizAntity mapToApi(Quiz quiz) {
         return new QuizAntity(
             id: quiz.id,
             title: quiz.title,
@@ -31,7 +39,7 @@ class QuizMapper {
     private static List<QuizEntryAntity> getQuizEntryAntities(Quiz quiz) {
         if (quiz.quizEntries) {
             quiz.quizEntries.size()
-            return quiz.quizEntries.collect { QuizEntryMapper.mapToApi(it) }
+            return quiz.quizEntries.collect { quizEntryMapper.mapToApi(it) }
         } else {
             return []
         }

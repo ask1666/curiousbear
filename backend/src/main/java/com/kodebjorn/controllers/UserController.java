@@ -1,9 +1,7 @@
 package com.kodebjorn.controllers;
 
 import com.kodebjorn.models.dto.CreateUserDto;
-import com.kodebjorn.models.dto.QuizAntity;
 import com.kodebjorn.models.dto.UserAntity;
-import com.kodebjorn.models.mappers.QuizMapper;
 import com.kodebjorn.models.mappers.UserMapper;
 import com.kodebjorn.services.UserService;
 import io.micronaut.core.annotation.Introspected;
@@ -24,12 +22,12 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.kodebjorn.models.mappers.UserMapper.mapToApi;
-
 @Controller("/api/users")
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Introspected
 public class UserController {
+
+    UserMapper umMapper = UserMapper.getInstance();
 
     private final UserService userService;
     PasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -44,19 +42,10 @@ public class UserController {
         return HttpResponse.ok(
             List.of(
                 userService.getAllUsers().stream()
-                    .map(UserMapper::mapToApi)
+                    .map(umMapper::mapToApi)
                     .collect(Collectors.toList())
             )
         );
-    }
-
-    @Secured(SecurityRule.IS_AUTHENTICATED)
-    @Get("/{username}")
-    public HttpResponse<List<QuizAntity>> getMyQuiz(@PathVariable String username) {
-        return HttpResponse.ok(userService.getMyQuiz(username)
-            .stream()
-            .map(QuizMapper::mapToApi)
-            .toList());
     }
 
     @Secured(SecurityRule.IS_ANONYMOUS)
@@ -64,7 +53,7 @@ public class UserController {
     public HttpResponse<UserAntity> createUser(@Valid @Body CreateUserDto createUserDto) {
         createUserDto.password = encoder.encode(createUserDto.password);
         return HttpResponse.ok(
-            mapToApi(userService.createUser(createUserDto))
+            umMapper.mapToApi(userService.createUser(createUserDto))
         );
     }
 

@@ -3,13 +3,20 @@ package com.kodebjorn.models.dto;
 import com.kodebjorn.models.QuizEntry;
 import io.micronaut.core.annotation.Introspected;
 
+import javax.validation.constraints.NotNull;
+
 @Introspected
 public class AddQuizEntryDto {
 
+    @NotNull
     private String quizTitle;
+    @NotNull
     private String quizEntryType;
+    @NotNull
     private String question;
+    @NotNull
     private String[] options;
+    @NotNull
     private String answer;
 
     public QuizEntry getQuizEntry() {
