@@ -2,7 +2,7 @@
 	<h3 class="text-xl p-4 font-semibold w-full text-center">Create User</h3>
 
 	<form @submit="submit" class="flex justify-center">
-		<div class="w-[38%] border flex flex-col items-center shadow-md rounded p-3">
+		<div class="formInnerContainer">
 			<label class="formLabel">
 				<p class="font-bold">Username:</p>
 				<input class="formInput" v-model="username" placeholder="CoolUsername..." />
@@ -15,7 +15,7 @@
 
 			<label class="formLabel">
 				<p class="font-bold">Password:</p>
-				<input class="formInput" :v-model="password" placeholder="y2DqDTqd8Q7V..." type="password" />
+				<input class="formInput" v-model="password" placeholder="y2DqDTqd8Q7V..." type="password" />
 			</label>
 			<div class="flex justify-between w-2/3 p-2">
 				<button class="optionalButton" @click="goToLogin" type="button">Login</button>
@@ -50,6 +50,11 @@ export default {
 
 		const submit = (e: Event) => {
 			e.preventDefault()
+			console.log({
+				username: state.username,
+				email: state.email,
+				password: state.password,
+			} as CreateUserDto)
 			createUser({
 				username: state.username,
 				email: state.email,

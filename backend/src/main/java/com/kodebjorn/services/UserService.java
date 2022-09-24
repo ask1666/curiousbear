@@ -1,5 +1,6 @@
 package com.kodebjorn.services;
 
+import com.kodebjorn.controllers.ExceptionUtils;
 import com.kodebjorn.models.Quiz;
 import com.kodebjorn.models.User;
 import com.kodebjorn.models.User.UserFetcher;
@@ -11,11 +12,9 @@ import io.micronaut.core.annotation.Introspected;
 
 import jakarta.inject.Singleton;
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.List;
 
-import static com.kodebjorn.controllers.ExceptionUtils.getUserDuplicateException;
 import static com.kodebjorn.controllers.ExceptionUtils.getUserNotFoundException;
 import static com.kodebjorn.models.Quiz.QuizFetcher.FetchQuizEntries;
 import static com.kodebjorn.models.User.UserFetcher.FetchQuiz;
@@ -63,12 +62,11 @@ public class UserService {
 
     public User createUser(@Valid CreateUserDto userDto) {
         var user = new User(userDto.getUserCredential());
-        try {
-            return superRepository.save(user);
-        } catch (ConstraintViolationException ex) {
-            System.out.println(ex.getConstraintViolations());
-            throw getUserDuplicateException().get();
+        boolean isUnique = userCredentialRepository.isUnique(userDto.getUserCredential().getUsername(), userDto.getUserCredential().getEmail());
+        if (!isUnique) {
+            throw ExceptionUtils.createUserException("User with that username or email already exists.");
         }
+            return superRepository.save(user);
     }
 
     @Transactional

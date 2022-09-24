@@ -3,12 +3,16 @@
 @tailwind utilities;
 
 .formInput {
-	@apply p-1 border border-gray-400 rounded focus:outline-0 focus:border-gray-800;
+	@apply p-1 border border-gray-400 rounded focus:outline-0 focus:border-gray-800 w-full;
 }
 
 .formLabel {
-  @apply p-2 flex w-2/3 justify-between items-center;
+  @apply p-2 items-center;
 }
+
+.formInnerContainer {
+  @apply min-w-[25rem] border flex flex-col items-center shadow-md rounded p-3
+  }
 
 .primaryButton {
   @apply bg-green-600 px-3 py-1 font-semibold rounded text-gray-100 hover:bg-green-700;

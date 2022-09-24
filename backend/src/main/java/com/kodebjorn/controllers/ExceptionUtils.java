@@ -23,7 +23,12 @@ public class ExceptionUtils {
     }
 
     public static HttpStatusException notAuthenticatedException() {
-        return new HttpStatusException(HttpStatus.UNAUTHORIZED, "User not found.");
+        return new HttpStatusException(HttpStatus.NOT_FOUND, "User not found.");
+    }
+
+
+    public static HttpStatusException createUserException(String message) {
+        return new HttpStatusException(HttpStatus.BAD_REQUEST, "Error creating user: " + message);
     }
 
 }

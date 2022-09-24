@@ -10,11 +10,10 @@ import io.micronaut.security.authentication.AuthenticationProvider;
 import io.micronaut.security.authentication.AuthenticationRequest;
 import io.micronaut.security.authentication.AuthenticationResponse;
 import org.reactivestreams.Publisher;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
 
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -22,10 +21,12 @@ import jakarta.inject.Singleton;
 public class AuthenticationProviderUserPassword implements AuthenticationProvider {
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final MyPasswordEncoder passwordEncoder;
 
-    public AuthenticationProviderUserPassword(UserService service) {
+    @Inject
+    public AuthenticationProviderUserPassword(UserService service, MyPasswordEncoder encoder) {
         userService = service;
+        passwordEncoder = encoder;
     }
 
     @Override
@@ -38,18 +39,14 @@ public class AuthenticationProviderUserPassword implements AuthenticationProvide
             } catch (HttpStatusException ex) {
                 throw ExceptionUtils.notAuthenticatedException();
             }
-            System.out.println(passwordEncoder.matches(authenticationRequest.getSecret().toString(), user.getUserCredential().getPassword()));
-            System.out.println(passwordEncoder.encode(authenticationRequest.getSecret().toString()));
-            System.out.println(user.getUserCredential().getPassword());
-            System.out.println(authenticationRequest.getIdentity().toString());
-        if (passwordEncoder.matches(authenticationRequest.getSecret().toString(), user.getUserCredential().getPassword())) {
-            AuthenticationResponse success = AuthenticationResponse.success((String) authenticationRequest.getIdentity());
-            emitter.next(success);
-            System.out.println(success.isAuthenticated());
-            emitter.complete();
-        } else {
-            emitter.error(AuthenticationResponse.exception());
-        }
+            if (passwordEncoder.matches(authenticationRequest.getSecret().toString(), user.getUserCredential().getPassword())) {
+                AuthenticationResponse success = AuthenticationResponse.success((String) authenticationRequest.getIdentity());
+                emitter.next(success);
+                System.out.println(success.isAuthenticated());
+                emitter.complete();
+            } else {
+                emitter.error(AuthenticationResponse.exception());
+            }
 
         }, FluxSink.OverflowStrategy.ERROR);
     }

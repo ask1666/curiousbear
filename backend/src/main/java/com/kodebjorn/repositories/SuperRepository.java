@@ -1,7 +1,7 @@
 package com.kodebjorn.repositories;
 
-import com.kodebjorn.models.utils.WithChildrenEntity;
 import com.kodebjorn.models.utils.SuperEntity;
+import com.kodebjorn.models.utils.WithChildrenEntity;
 import io.micronaut.data.annotation.Repository;
 
 import javax.persistence.EntityManager;
@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 public abstract class SuperRepository {
+
     @PersistenceContext
     private EntityManager em;
 

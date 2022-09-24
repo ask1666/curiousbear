@@ -5,17 +5,12 @@ import com.kodebjorn.models.User.UserFetcher;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.repository.GenericRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
 public abstract class UserRepository implements GenericRepository<User, Integer> {
-
-    @PersistenceContext
-    private EntityManager em;
 
     abstract Optional<User> findOne(Integer id);
 

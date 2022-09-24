@@ -1,8 +1,10 @@
 package com.kodebjorn.controllers;
 
+import com.kodebjorn.models.User;
 import com.kodebjorn.models.dto.CreateUserDto;
 import com.kodebjorn.models.dto.UserAntity;
 import com.kodebjorn.models.mappers.UserMapper;
+import com.kodebjorn.security.MyPasswordEncoder;
 import com.kodebjorn.services.UserService;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.http.HttpResponse;
@@ -15,8 +17,6 @@ import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,10 +30,11 @@ public class UserController {
     UserMapper umMapper = UserMapper.getInstance();
 
     private final UserService userService;
-    PasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final MyPasswordEncoder encoder;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, MyPasswordEncoder encoder) {
         this.userService = userService;
+        this.encoder = encoder;
     }
 
     @Secured(SecurityRule.IS_AUTHENTICATED)
@@ -52,9 +53,10 @@ public class UserController {
     @Post(consumes = MediaType.APPLICATION_JSON)
     public HttpResponse<UserAntity> createUser(@Valid @Body CreateUserDto createUserDto) {
         createUserDto.password = encoder.encode(createUserDto.password);
-        return HttpResponse.ok(
-            umMapper.mapToApi(userService.createUser(createUserDto))
-        );
+
+        User createdUser = userService.createUser(createUserDto);
+
+        return HttpResponse.ok(umMapper.mapToApi(createdUser));
     }
 
     @Delete("/deleteByUsername/{username}")

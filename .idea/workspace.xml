@@ -5,52 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2db882e-2003-44dc-8646-afbd75c7dde2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/micronaut-cli.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/kodebjorn/models/mappers/QuizEntryMapper.groovy" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/kodebjorn/models/mappers/QuizMapper.groovy" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/kodebjorn/models/mappers/UserMapper.groovy" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/Application.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/controllers/ExceptionUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/controllers/HomeController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/controllers/QuizController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/controllers/QuizEntryController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/controllers/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/models/Quiz.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/models/QuizEntry.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/models/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/models/UserCredential.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/models/dto/AddQuizEntryDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/models/dto/CreateQuizDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/models/dto/CreateUserDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/models/dto/QuizAntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/models/dto/QuizEntryAntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/models/dto/UserAntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/models/utils/Fetcher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/models/utils/StateContainerEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/models/utils/SuperEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/repositories/QuizEntryRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/repositories/QuizRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/repositories/SuperRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/repositories/UserCredentialRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/repositories/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/security/AppClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/security/AuthenticationProviderUserPassword.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/security/DefaultAuthorizationExceptionHandlerReplacement.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/services/QuizEntryService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/services/QuizService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kodebjorn/services/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/logback.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/application-test.yml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/curiousbear.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,21 +81,23 @@
       </map>
     </option>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="27IUzVPzxF2iworKWDfRqCpd7cB" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/backend" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/Asbjorn/Documents/IntellijProjects/curiousbear/backend"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.kodebjorn.repositories" />
@@ -223,7 +183,6 @@
         <entry key="fab68c78-c443-433b-b1c5-9284d36c0a7c" value="TOOL_WINDOW" />
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
