@@ -28,7 +28,6 @@ public class User extends WithChildrenEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Integer id;
 
     @OneToOne(cascade = CascadeType.PERSIST)

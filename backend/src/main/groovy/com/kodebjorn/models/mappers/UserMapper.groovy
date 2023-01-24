@@ -1,3 +1,4 @@
+//file:noinspection GrMethodMayBeStatic
 package com.kodebjorn.models.mappers
 
 import com.kodebjorn.models.User

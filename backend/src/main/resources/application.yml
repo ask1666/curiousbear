@@ -28,12 +28,12 @@ jpa:
     properties:
       hibernate:
         hbm2ddl:
-          auto: update
+          auto: none
         show_sql: true
 flyway:
   datasources:
     default:
-      enabled: false
+      enabled: true
 netty:
   default:
     allocator:

@@ -1,9 +1,9 @@
 plugins {
-    id 'java'
     id("org.openapi.generator") version "5.4.0"
     id("groovy")
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("io.micronaut.application") version "3.3.2"
+    id "org.flywaydb.flyway" version "9.8.1"
 }
 
 
@@ -89,3 +89,10 @@ build {
     finalizedBy 'openApiGenerate'
 }
 //build.finalizedBy('openApiGenerate')
+
+flyway {
+    url = 'jdbc:postgresql://localhost:5432/curiousbear'
+    user = 'postgres'
+    password = 'postgres'
+    cleanDisabled = false
+}

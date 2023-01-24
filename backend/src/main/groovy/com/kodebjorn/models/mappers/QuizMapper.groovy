@@ -16,6 +16,7 @@ class QuizMapper {
 
     QuizEntryMapper quizEntryMapper = QuizEntryMapper.instance
 
+    @SuppressWarnings('GrMethodMayBeStatic')
     QuizAntity mapToApi(Quiz quiz) {
         return new QuizAntity(
             id: quiz.id,

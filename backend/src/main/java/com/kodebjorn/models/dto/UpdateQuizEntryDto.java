@@ -3,12 +3,14 @@ package com.kodebjorn.models.dto;
 import com.kodebjorn.models.QuizEntry;
 import io.micronaut.core.annotation.Introspected;
 
+import java.util.ArrayList;
+
 @Introspected
 public class UpdateQuizEntryDto {
 
     private String quizEntryType;
     private String question;
-    private String[] options;
+    private ArrayList<String> options;
     private String answer;
 
     public QuizEntry getQuizEntry() {
@@ -39,11 +41,11 @@ public class UpdateQuizEntryDto {
         this.question = question;
     }
 
-    public String[] getOptions() {
+    public ArrayList<String> getOptions() {
         return options;
     }
 
-    public void setOptions(String[] options) {
+    public void setOptions(ArrayList<String> options) {
         this.options = options;
     }
 

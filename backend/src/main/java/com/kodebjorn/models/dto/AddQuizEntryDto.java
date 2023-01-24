@@ -4,6 +4,7 @@ import com.kodebjorn.models.QuizEntry;
 import io.micronaut.core.annotation.Introspected;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 
 @Introspected
 public class AddQuizEntryDto {
@@ -15,7 +16,7 @@ public class AddQuizEntryDto {
     @NotNull
     private String question;
     @NotNull
-    private String[] options;
+    private ArrayList<String> options;
     @NotNull
     private String answer;
 
@@ -47,11 +48,11 @@ public class AddQuizEntryDto {
         this.question = question;
     }
 
-    public String[] getOptions() {
+    public ArrayList<String> getOptions() {
         return options;
     }
 
-    public void setOptions(String[] options) {
+    public void setOptions(ArrayList<String> options) {
         this.options = options;
     }
 

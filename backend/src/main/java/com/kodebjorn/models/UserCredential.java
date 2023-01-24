@@ -16,38 +16,18 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
-@Table(name = "user_credentials", indexes = {
-    @Index(name = "user_credentials_email_key", columnList = "email", unique = true),
-    @Index(name = "user_credentials_username_key", columnList = "username", unique = true)
-})
 @Entity
 @Introspected
 public class UserCredential implements SuperEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Integer id;
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "userCredential")
-    @JsonIgnore
     private User user;
-
-    @Size(min = 3, max = 50, message
-        = "username must be between 3 and 50 characters")
-    @Column(name = "username", nullable = false, length = 50, unique = true)
     private String username;
-
-    @Size(min = 3, message
-        = "password must be larger than 3 characters")
-    @Column(name = "password", nullable = false)
-    @JsonIgnore
     private String password;
-
-    @Size(min = 3, max = 50, message
-        = "Email must be between 3 and 50 characters")
-    @Email(message = "Email must be valid.")
-    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     public UserCredential() {

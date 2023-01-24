@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
@@ -22,28 +23,15 @@ import java.util.Arrays;
 public class QuizEntry implements SuperEntity<Integer> {
   @Id
   @GeneratedValue
-  @Column(name = "id", nullable = false)
   private Integer id;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JsonIgnore
   private Quiz quiz;
 
-  
-  @Column(name = "quiz_entry_type", nullable = false)
   private String quizEntryType;
-
-  
-  @Type(type = "jsonb")
-  @Column(name = "question", nullable = false, length = 300)
   private String question;
-
-  
-  @Column(name = "options", nullable = false)
-  private String[] options;
-
-  
-  @Column(name = "answer", nullable = false)
+  @Type(type = "jsonb")
+  private ArrayList<String> options;
   private String answer;
 
   public String getAnswer() {
@@ -54,11 +42,11 @@ public class QuizEntry implements SuperEntity<Integer> {
     this.answer = answer;
   }
 
-  public String[] getOptions() {
+  public ArrayList<String> getOptions() {
     return options;
   }
 
-  public void setOptions(String[] options) {
+  public void setOptions(ArrayList<String> options) {
     this.options = options;
   }
 
@@ -101,7 +89,7 @@ public class QuizEntry implements SuperEntity<Integer> {
         ", quiz=" + quiz +
         ", quizEntryType='" + quizEntryType + '\'' +
         ", question='" + question + '\'' +
-        ", options=" + Arrays.toString(options) +
+        ", options=" + options +
         ", answer='" + answer + '\'' +
         '}';
   }

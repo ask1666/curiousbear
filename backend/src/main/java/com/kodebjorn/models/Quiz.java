@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 
-@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 @Table(name = "quiz")
 @Entity
 @Introspected
@@ -31,29 +30,16 @@ public class Quiz extends WithChildrenEntity<Integer> {
 
   @Id
   @GeneratedValue
-  @Column(name = "id", nullable = false)
   private Integer id;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JsonIgnore
   private User user;
 
   @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "quiz")
   private List<QuizEntry> quizEntries = new ArrayList<>();
 
-  @Size(min = 3, max = 50, message
-      = "About Me must be between 3 and 50 characters")
-  
-  @Column(name = "title", nullable = false, unique = true, length = 50)
   private String title;
-
-  
-  @Type(type = "jsonb")
-  @Column(name = "description", nullable = false, length = 300)
   private String description;
-
-  
-  @Column(name = "is_public", nullable = false)
   private Boolean isPublic = false;
 
   public Integer getId() {
