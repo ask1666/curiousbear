@@ -1,36 +1,24 @@
 package com.kodebjorn.models;
 
 
-import com.kodebjorn.models.utils.Fetcher;
-import com.kodebjorn.models.utils.WithChildrenEntity;
 import io.micronaut.core.annotation.Introspected;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 @Table(name = "users")
 @Entity
 @Introspected
-public class User extends WithChildrenEntity<Integer> {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.EAGER, optional = true, mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private UserCredential userCredential;
 
     @Fetch(FetchMode.SUBSELECT)
@@ -55,6 +43,7 @@ public class User extends WithChildrenEntity<Integer> {
 
     public User(UserCredential userCredential) {
         this.userCredential = userCredential;
+        this.userCredential.setUser(this);
     }
 
     public UserCredential getUserCredential() {
@@ -76,34 +65,9 @@ public class User extends WithChildrenEntity<Integer> {
     @Override
     public String toString() {
         return "User{" +
-            "id=" + id +
-            ", userCredential=" + userCredential +
-            ", quiz=" + quiz +
-            '}';
-    }
-
-    public void addAllChildren() {
-        getQuiz().forEach(this::addChild);
-        addChild(getUserCredential());
-    }
-
-    public enum UserFetcher implements Fetcher<User> {
-        FetchAll(user -> {
-           user.getQuiz().size();
-           user.getUserCredential().getId();
-        }),
-        FetchQuiz(user -> user.getQuiz().size()),
-        FetchUserCredential(user -> user.getUserCredential().getId());
-
-        private final Consumer<User> consumer;
-
-        UserFetcher(Consumer<User> consumer) {
-            this.consumer = consumer;
-        }
-
-        @Override
-        public void doFetch(User user) {
-            consumer.accept(user);
-        }
+                "id=" + id +
+                ", userCredential=" + userCredential +
+                ", quiz=" + quiz +
+                '}';
     }
 }

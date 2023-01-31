@@ -2,13 +2,21 @@ package com.kodebjorn.repositories;
 
 import com.kodebjorn.models.QuizEntry;
 import io.micronaut.data.annotation.Repository;
-import io.micronaut.data.jpa.repository.JpaRepository;
+import io.micronaut.data.repository.GenericRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface QuizEntryRepository extends JpaRepository<QuizEntry, Integer> {
+public abstract class QuizEntryRepository implements GenericRepository<QuizEntry, Integer> {
 
-    List<QuizEntry> findByQuizTitle(String title);
+    public abstract Optional<QuizEntry> findOneById(Integer id);
 
+    public abstract List<QuizEntry> findAll();
+
+    public abstract List<QuizEntry> findByQuizTitle(String title);
+
+    public abstract Integer save(QuizEntry quizEntry);
+
+    public abstract void delete(QuizEntry quizEntry);
 }

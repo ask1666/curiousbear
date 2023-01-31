@@ -4,11 +4,12 @@ import com.kodebjorn.models.UserCredential;
 import io.micronaut.data.annotation.Query;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jpa.repository.JpaRepository;
+import io.micronaut.data.repository.GenericRepository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserCredentialRepository extends JpaRepository<UserCredential, Integer> {
+public interface UserCredentialRepository extends GenericRepository<UserCredential, Integer> {
 
     @Query(
         value =
@@ -18,6 +19,10 @@ public interface UserCredentialRepository extends JpaRepository<UserCredential, 
         """
     )
     boolean isUnique(String username, String email);
+
+    int save(UserCredential userCredential);
+
+    Optional<UserCredential> findOne(Integer id);
 
     Optional<UserCredential> findByUsername(String username);
 

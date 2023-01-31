@@ -1,30 +1,19 @@
 package com.kodebjorn.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kodebjorn.models.utils.SuperEntity;
 import io.micronaut.core.annotation.Introspected;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
 
 @Entity
 @Introspected
-public class UserCredential implements SuperEntity<Integer> {
+public class UserCredential {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "userCredential")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn
     private User user;
     private String username;
     private String password;
@@ -83,9 +72,9 @@ public class UserCredential implements SuperEntity<Integer> {
     @Override
     public String toString() {
         return "UserCredential{" +
-            "id=" + id +
-            ", username='" + username + '\'' +
-            ", email='" + email + '\'' +
-            '}';
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

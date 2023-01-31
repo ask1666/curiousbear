@@ -1,11 +1,11 @@
 create table users (
-    id int generated always as identity,
+    id serial,
     user_credential_id int,
     primary key(id)
 );
 
 create table user_credential (
-    id int generated always as identity,
+    id serial,
     user_id int not null,
     username varchar(50) not null,
     password varchar(255) not null,
@@ -19,8 +19,8 @@ alter table users
         foreign key(user_credential_id) references user_credential(id);
 
 create table quiz (
-    id int generated always as identity,
-    user_id int not null,
+    id serial,
+    user_id serial not null,
     title varchar(255),
     description text,
     is_public boolean,
@@ -29,8 +29,8 @@ create table quiz (
 );
 
 create table quiz_entry (
-    id int generated always as identity,
-    quiz_id int not null,
+    id serial,
+    quiz_id serial not null,
     quiz_entry_type varchar(50),
     question text,
     options jsonb,
