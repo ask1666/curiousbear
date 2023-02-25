@@ -16,7 +16,7 @@ public abstract class QuizEntryRepository implements GenericRepository<QuizEntry
 
     public abstract List<QuizEntry> findByQuizTitle(String title);
 
-    public abstract Integer save(QuizEntry quizEntry);
+    public abstract QuizEntry save(QuizEntry quizEntry);
 
     public abstract void delete(QuizEntry quizEntry);
 }

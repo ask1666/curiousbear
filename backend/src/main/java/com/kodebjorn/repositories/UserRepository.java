@@ -14,7 +14,7 @@ public abstract class UserRepository implements GenericRepository<User, Integer>
 
     public abstract List<User> findAll();
 
-    public abstract Integer save(User user);
+    public abstract User save(User user);
 
     public abstract void delete(User user);
 

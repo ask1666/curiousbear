@@ -3,8 +3,8 @@ package com.kodebjorn.services;
 import com.kodebjorn.models.QuizEntry;
 import com.kodebjorn.repositories.QuizEntryRepository;
 import io.micronaut.core.annotation.Introspected;
-
 import jakarta.inject.Singleton;
+
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -34,8 +34,7 @@ public class QuizEntryService {
     }
 
     public QuizEntry save(QuizEntry quizEntry) {
-        var createdId = quizEntryRepository.save(quizEntry);
-        return quizEntryRepository.findOneById(createdId).orElseThrow();
+        return quizEntryRepository.save(quizEntry);
     }
 
     public void deleteById(Integer id) {

@@ -18,7 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = true, mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private UserCredential userCredential;
 
     @Fetch(FetchMode.SUBSELECT)

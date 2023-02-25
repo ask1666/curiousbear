@@ -21,12 +21,38 @@ class UserRepositoryTest extends RepositorySpecification {
             def uc = new UserCredential('username', 'password', 'email')
             User user = new User(uc)
         when:
-            int userId = userRepository.save(user)
+            User saved = userRepository.save(user)
         then:
-            def foundUser = userRepository.findOne(userId).orElseThrow()
-            foundUser.userCredential.id instanceof Integer
-            foundUser.userCredential.username == 'username'
+            saved.userCredential.id instanceof Integer
+            saved.userCredential.username == 'username'
+    }
 
+    def 'isUnique'() {
+        given:
+            def uc = new UserCredential('username', 'password', 'email')
+            User user = new User(uc)
+        expect:
+            ucRepository.isUnique(
+                    uc.username,
+                    uc.email
+            )
+        when:
+            userRepository.save(user)
+        then:
+            !ucRepository.isUnique(
+                    uc.username,
+                    uc.email
+            )
+    }
+
+    def 'delete'() {
+        given:
+            def uc = new UserCredential('username', 'password', 'email')
+            User user = new User(uc)
+        when:
+            userRepository.delete(user)
+        then:
+            userRepository.findAll() == []
     }
 
 }

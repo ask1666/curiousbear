@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public abstract class QuizRepository implements GenericRepository<Quiz, Integer> {
 
-    public abstract Integer save(Quiz quiz);
+    public abstract Quiz save(Quiz quiz);
 
     public abstract void delete(Quiz quiz);
 

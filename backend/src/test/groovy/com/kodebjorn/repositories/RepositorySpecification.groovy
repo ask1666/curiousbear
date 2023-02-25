@@ -1,44 +1,41 @@
 package com.kodebjorn.repositories
 
-import com.zaxxer.hikari.HikariConfig
-import com.zaxxer.hikari.HikariDataSource
+import org.flywaydb.core.Flyway
+import org.flywaydb.core.api.Location
+import org.flywaydb.core.api.configuration.ClassicConfiguration
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.spock.Testcontainers
 import spock.lang.Shared
 import spock.lang.Specification
 
-import java.sql.ResultSet
-import java.sql.Statement
-
 @Testcontainers
 abstract class RepositorySpecification extends Specification {
 
+    private static final Logger logger = LoggerFactory.getLogger(this.class)
+
     @Shared
-    PostgreSQLContainer container = new PostgreSQLContainer('postgres:9.6-alpine')
+    final PostgreSQLContainer container = new PostgreSQLContainer('postgres:14-alpine')
             .withDatabaseName("test_db")
             .withUsername("postgres")
             .withPassword("postgres")
 
-    def "waits until postgres accepts jdbc connections"() {
+    /**
+     * Migrate flyway on container database
+     */
+    def setup() {
+        def config = new ClassicConfiguration()
+        config.setDataSource(
+                container.jdbcUrl,
+                container.username,
+                container.password
+        )
+        config.setLocations(new Location("classpath:db/migration"))
 
-        given: "a jdbc connection"
-            HikariConfig hikariConfig = new HikariConfig()
-            hikariConfig.setJdbcUrl(container.jdbcUrl)
-            hikariConfig.setUsername("postgres")
-            hikariConfig.setPassword("postgres")
-            HikariDataSource ds = new HikariDataSource(hikariConfig)
+        def flyway = new Flyway(config)
+        flyway.migrate()
 
-        when: "querying the database"
-            Statement statement = ds.getConnection().createStatement()
-            statement.execute("SELECT 1")
-            ResultSet resultSet = statement.getResultSet()
-            resultSet.next()
-
-        then: "result is returned"
-            int resultSetInt = resultSet.getInt(1)
-            resultSetInt == 1
-
-        cleanup:
-            ds.close()
+        logger.info("Flyway migrations completed successfully.")
     }
 }
