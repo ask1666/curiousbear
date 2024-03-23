@@ -17,17 +17,17 @@ public interface UserCredentialRepository extends GenericRepository<UserCredenti
                                     where u.username = :username or u.email = :email
                             """
     )
-    boolean isUnique(String username, String email);
+    boolean isUniqueIgnoreCase(String username, String email);
 
     UserCredential save(UserCredential userCredential);
 
     Optional<UserCredential> findOne(Integer id);
 
-    Optional<UserCredential> findByUsername(String username);
+    Optional<UserCredential> findByUsernameIgnoreCase(String username);
 
-    void deleteByUsername(String username);
+    void deleteByUsernameIgnoreCase(String username);
 
-    Optional<UserCredential> findByEmail(String email);
+    Optional<UserCredential> findByEmailIgnoreCase(String email);
 
-    void deleteByEmail(String email);
+    void deleteByEmailIgnoreCase(String email);
 }

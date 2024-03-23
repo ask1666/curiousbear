@@ -9,12 +9,11 @@ import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.security.authentication.AuthenticationProvider;
 import io.micronaut.security.authentication.AuthenticationRequest;
 import io.micronaut.security.authentication.AuthenticationResponse;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
-
-import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
 
 @Singleton
 @Introspected
@@ -35,7 +34,8 @@ public class AuthenticationProviderUserPassword implements AuthenticationProvide
         return Flux.create(emitter -> {
             User user;
             try {
-                user = userService.findByUsername(authenticationRequest.getIdentity().toString());
+                String identity = authenticationRequest.getIdentity().toString().toLowerCase();
+                user = userService.findByUsername(identity);
             } catch (HttpStatusException ex) {
                 throw ExceptionUtils.notAuthenticatedException();
             }

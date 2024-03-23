@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 import { UserCredential } from '../generated'
 
 type Store = {
-	user: UserCredential | undefined,
+	user: string | undefined,
 	token: AccessToken,
 }
 
@@ -14,12 +14,12 @@ export type AccessToken = {
 export const store = createStore({
 	state() {
 		return {
-			user: undefined,
+			user: '',
 			token: {},
 		} as Store
 	},
 	mutations: {
-		setUser(state: Store, newUser: UserCredential | undefined) {
+		setUser(state: Store, newUser: string) {
 			state.user = newUser
 		},
 		setToken(state: Store, newToken: AccessToken) {
@@ -28,7 +28,7 @@ export const store = createStore({
 		},
 	},
 	getters: {
-		getUser(state: Store): UserCredential | undefined {
+		getUser(state: Store): string | undefined {
 			return state.user
 		},
 		getToken(state: Store) : AccessToken {

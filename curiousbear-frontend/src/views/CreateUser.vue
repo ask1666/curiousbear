@@ -48,27 +48,26 @@ export default {
 			router.push(route.path)
 		}
 
+		const goToLogin = () => {
+				goToRoute(routes.find((e: CustomRoute) => e.name === 'Login') as CustomRoute)
+			}
+
 		const submit = (e: Event) => {
 			e.preventDefault()
-			console.log({
-				username: state.username,
-				email: state.email,
-				password: state.password,
-			} as CreateUserDto)
 			createUser({
 				username: state.username,
 				email: state.email,
 				password: state.password,
 			} as CreateUserDto)
+
+			goToLogin()
+			
 		}
 
 		return {
 			...toRefs(state),
 
-			goToLogin: () => {
-				goToRoute(routes.find((e: CustomRoute) => e.name === 'Login') as CustomRoute)
-			},
-
+			goToLogin,
 			submit,
 		}
 	},

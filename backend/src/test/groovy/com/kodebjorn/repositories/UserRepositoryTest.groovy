@@ -32,14 +32,14 @@ class UserRepositoryTest extends RepositorySpecification {
             def uc = new UserCredential('username', 'password', 'email')
             User user = new User(uc)
         expect:
-            ucRepository.isUnique(
+            ucRepository.isUniqueIgnoreCase(
                     uc.username,
                     uc.email
             )
         when:
             userRepository.save(user)
         then:
-            !ucRepository.isUnique(
+            !ucRepository.isUniqueIgnoreCase(
                     uc.username,
                     uc.email
             )

@@ -1,5 +1,5 @@
 <template>
-	<h3 class="text-xl p-4 font-semibold w-full text-center">Create User</h3>
+	<h3 class="text-xl p-4 font-semibold w-full text-center">Login</h3>
 
 	<form @submit="submit" class="flex justify-center">
 		<div class="w-[38%] border flex flex-col items-center shadow-md rounded p-3">

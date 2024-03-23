@@ -3,6 +3,7 @@ package com.kodebjorn.services;
 import com.kodebjorn.controllers.ExceptionUtils;
 import com.kodebjorn.models.Quiz;
 import com.kodebjorn.models.User;
+import com.kodebjorn.models.UserCredential;
 import com.kodebjorn.models.dto.CreateUserDto;
 import com.kodebjorn.repositories.UserCredentialRepository;
 import com.kodebjorn.repositories.UserRepository;
@@ -36,7 +37,7 @@ public class UserService {
 
     @Transactional
     public User findByUsername(String username) {
-        var userCredential = userCredentialRepository.findByUsername(username).orElseThrow(getUserNotFoundException());
+        var userCredential = userCredentialRepository.findByUsernameIgnoreCase(username).orElseThrow(getUserNotFoundException());
         return userCredential.getUser();
     }
 
@@ -51,18 +52,21 @@ public class UserService {
     }
 
     public User createUser(@Valid CreateUserDto userDto) {
-        var user = new User(userDto.getUserCredential());
-        boolean isUnique = userCredentialRepository.isUnique(userDto.getUserCredential().getUsername(), userDto.getUserCredential().getEmail());
+        UserCredential userCredential = userDto.getUserCredential();
+        boolean isUnique = userCredentialRepository.isUniqueIgnoreCase(
+                userCredential.getUsername(),
+                userCredential.getEmail()
+        );
         if (!isUnique) {
             throw ExceptionUtils.createUserException("User with that username or email already exists.");
         }
-        var created = userRepository.save(user);
-        return created;
+        var user = new User(userCredential);
+        return userRepository.save(user);
     }
 
     @Transactional
     public void deleteByUsername(String username) {
-        var userCredential = userCredentialRepository.findByUsername(username).orElseThrow(getUserNotFoundException());
+        var userCredential = userCredentialRepository.findByUsernameIgnoreCase(username).orElseThrow(getUserNotFoundException());
         var user = userCredential.getUser();
         userRepository.delete(user);
     }
