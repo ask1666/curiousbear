@@ -2,7 +2,7 @@ package com.kodebjorn.models;
 
 import io.micronaut.core.annotation.Introspected;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Introspected

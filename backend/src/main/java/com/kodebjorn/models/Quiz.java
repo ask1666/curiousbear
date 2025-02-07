@@ -1,8 +1,8 @@
 package com.kodebjorn.models;
 
 import io.micronaut.core.annotation.Introspected;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 

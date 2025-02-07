@@ -1,18 +1,12 @@
 package com.kodebjorn.models;
 
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import io.micronaut.core.annotation.Introspected;
+import jakarta.persistence.*;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 
-@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 @Entity
 @Introspected
 public class QuizEntry {
@@ -25,7 +19,8 @@ public class QuizEntry {
 
   private String quizEntryType;
   private String question;
-  @Type(type = "jsonb")
+
+  @Type(JsonBinaryType.class)
   private ArrayList<String> options;
   private String answer;
 

@@ -4,8 +4,8 @@ import com.kodebjorn.models.QuizEntry;
 import com.kodebjorn.repositories.QuizEntryRepository;
 import io.micronaut.core.annotation.Introspected;
 import jakarta.inject.Singleton;
+import jakarta.transaction.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 import static com.kodebjorn.controllers.ExceptionUtils.getQuizEntryNotFoundException;

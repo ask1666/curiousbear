@@ -9,8 +9,8 @@ import com.kodebjorn.repositories.UserCredentialRepository;
 import com.kodebjorn.repositories.UserRepository;
 import io.micronaut.core.annotation.Introspected;
 import jakarta.inject.Singleton;
+import jakarta.transaction.Transactional;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
